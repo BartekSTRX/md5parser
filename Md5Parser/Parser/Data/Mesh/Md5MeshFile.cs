@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace Parser.Data
+namespace Parser.Data.Mesh
 {
-    public class Md5File
+    public class Md5MeshFile
     {
-        public Md5File(int version, string commandLine, IEnumerable<Joint> joints, IEnumerable<Mesh> meshes)
+        public Md5MeshFile(int version, string commandLine, IEnumerable<Joint> joints, IEnumerable<Mesh> meshes)
         {
             Version = version;
             CommandLine = commandLine;

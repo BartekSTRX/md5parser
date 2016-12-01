@@ -35,15 +35,20 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Joint.cs" />
-    <Compile Include="Data\Md5File.cs" />
-    <Compile Include="Data\Mesh.cs" />
-    <Compile Include="Data\Vertex.cs" />
-    <Compile Include="Data\Weight.cs" />
-    <Compile Include="Md5Parser.cs" />
+    <Compile Include="Data\Anim\Frame.cs" />
+    <Compile Include="Data\Anim\JointPosition.cs" />
+    <Compile Include="Data\Anim\Bound.cs" />
+    <Compile Include="Data\Anim\Md5AnimFile.cs" />
+    <Compile Include="Data\Anim\SkeletonJoint.cs" />
+    <Compile Include="Data\Mesh\Joint.cs" />
+    <Compile Include="Data\Mesh\Md5MeshFile.cs" />
+    <Compile Include="Data\Mesh\Mesh.cs" />
+    <Compile Include="Data\Mesh\Triangle.cs" />
+    <Compile Include="Data\Mesh\Vertex.cs" />
+    <Compile Include="Data\Mesh\Weight.cs" />
+    <Compile Include="Md5MeshParser.cs" />
     <Compile Include="Md5Lexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data\Triangle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

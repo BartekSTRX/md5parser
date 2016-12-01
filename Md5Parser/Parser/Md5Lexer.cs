@@ -76,7 +76,7 @@ namespace Parser
 
             _tokenDefinitions = new List<TokenDefinition>
             {
-                new TokenDefinition(new Regex(@"[-+]?\d*\.?\d+"),  TokenType.Float),
+                new TokenDefinition(new Regex(@"[-+]?\d+\.\d+"),  TokenType.Float),
                 new TokenDefinition(new Regex(@"[-+]?\d+"),  TokenType.Integer),
                 new TokenDefinition(new Regex(@"""(.*?)"""), TokenType.QuotedString),
                 new TokenDefinition(new Regex(@"\w+"), TokenType.Word),

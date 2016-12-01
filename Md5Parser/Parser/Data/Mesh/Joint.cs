@@ -1,4 +1,4 @@
-namespace Parser.Data
+namespace Parser.Data.Mesh
 {
     public class Joint
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Parser.Data
+namespace Parser.Data.Mesh
 {
     public class Mesh
     {

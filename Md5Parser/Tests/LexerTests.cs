@@ -49,13 +49,15 @@ mesh {
 	weight 2 5 0.6999999881 ( 0.0828403607 5.4251484871 23.0223522186 )
 }";
 
-        private string _path;
+        private string _pathMesh;
+        private string _pathAnim;
 
         [SetUp]
         public void SetUp()
         {
             var dir = AppDomain.CurrentDomain.BaseDirectory;
-            _path = Path.Combine(dir, "hand_LowPoly.md5mesh");
+            _pathMesh = Path.Combine(dir, "hand_LowPoly.md5mesh");
+            _pathAnim = Path.Combine(dir, "hand_LowPoly.md5anim");
         }
 
         [Test]
@@ -74,16 +76,16 @@ mesh {
             var lexer = new Md5Lexer();
             var tokens = lexer.Tokenize(SampleMd5FileContent);
 
-            var parser = new Md5Parser();
+            var parser = new Md5MeshParser();
             var result = parser.Parse(tokens);
 
             Console.WriteLine(result);
         }
 
         [Test]
-        public void TestLexerFile()
+        public void TestLexerMeshFile()
         {
-            var fileContent = File.ReadAllText(_path);
+            var fileContent = File.ReadAllText(_pathMesh);
 
             var lexer = new Md5Lexer();
 
@@ -93,13 +95,37 @@ mesh {
         }
 
         [Test]
-        public void TestParserFile()
+        public void TestParserMeshFile()
         {
-            var fileContent = File.ReadAllText(_path);
+            var fileContent = File.ReadAllText(_pathMesh);
 
             var tokens = new Md5Lexer().Tokenize(fileContent);
 
-            var result = new Md5Parser().Parse(tokens);
+            var result = new Md5MeshParser().Parse(tokens);
+
+            Console.WriteLine(result);
+        }
+
+        [Test]
+        public void TestLexerAnimFile()
+        {
+            var fileContent = File.ReadAllText(_pathAnim);
+
+            var lexer = new Md5Lexer();
+
+            lexer.Tokenize(fileContent)
+                .ToList()
+                .ForEach(Console.WriteLine);
+        }
+
+        [Test]
+        public void TestParserAnimFile()
+        {
+            var fileContent = File.ReadAllText(_pathAnim);
+
+            var tokens = new Md5Lexer().Tokenize(fileContent);
+
+            var result = new Md5AnimParser().Parse(tokens);
 
             Console.WriteLine(result);
         }
