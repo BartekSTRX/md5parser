@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using Parser.Data.Anim;
 using Parser.Data.Mesh;
 
@@ -11,40 +10,32 @@ namespace Parser
     {
         protected Queue<Token> TokenQueue;
 
+        private void ParseSimpleToken(TokenType expectedTokenType, string errorMessage)
+        {
+            if (TokenQueue.Dequeue().Type != expectedTokenType)
+            {
+                throw new Exception(errorMessage);
+            }
+        }
+
         protected void ParseLeftParenthesis()
         {
-            var token = TokenQueue.Dequeue();
-            if (token.Type != TokenType.LParen)
-            {
-                throw new Exception("left parenthesis '(' expected");
-            }
+            ParseSimpleToken(TokenType.LParen, "left parenthesis '(' expected");
         }
 
         protected void ParseRightParenthesis()
         {
-            var token = TokenQueue.Dequeue();
-            if (token.Type != TokenType.RParen)
-            {
-                throw new Exception("right parenthesis ')' expected");
-            }
+            ParseSimpleToken(TokenType.RParen, "right parenthesis ')' expected");
         }
 
         protected void ParseLeftBrace()
         {
-            var token = TokenQueue.Dequeue();
-            if (token.Type != TokenType.LBrace)
-            {
-                throw new Exception("left brace '{' expected");
-            }
+            ParseSimpleToken(TokenType.LBrace, "left brace '{' expected");
         }
 
         protected void ParseRightBrace()
         {
-            var token = TokenQueue.Dequeue();
-            if (token.Type != TokenType.RBrace)
-            {
-                throw new Exception("right brace '}' expected");
-            }
+            ParseSimpleToken(TokenType.RBrace, "right brace '}' expected");
         }
 
         protected int ParseInt(string name)
@@ -85,6 +76,15 @@ namespace Parser
                 throw new Exception(name + " keyword expected");
             }
         }
+
+        protected void AssertCorrectListSize<T>(string name, IList<T> list, int expectedSize)
+        {
+            if (list.Count != expectedSize)
+            {
+                throw new Exception(string.Format(
+                    "number of parsed {0} ({1}) is different than expected ({2})", name, list.Count, expectedSize));
+            }
+        }
     }
 
 
@@ -109,18 +109,10 @@ namespace Parser
 
 
             var joints = ParseJoints();
-            if (joints.Count != numJoints)
-            {
-                throw new Exception(string.Format(
-                    "number of parsed joints ({0}) is different than expected ({1})", joints.Count, numJoints));
-            }
+            AssertCorrectListSize("joints", joints, numJoints);
 
             var meshes = ParseMeshes();
-            if (meshes.Count != numMeshes)
-            {
-                throw new Exception(string.Format(
-                    "number of parsed meshes ({0}) is different than expected ({1})", meshes.Count, numMeshes));
-            }
+            AssertCorrectListSize("meshes", meshes, numMeshes);
 
             return new Md5MeshFile(version, commandLineParameters, joints, meshes);
         }
@@ -157,12 +149,8 @@ namespace Parser
 
                     vertices.Add(new Vertex(index, texU, texV, weightIndex, weightElem));
                 }
-                if (vertices.Count != numberOfVertices)
-                {
-                    throw new Exception(
-                        string.Format("number of vertices defined in file {0} is different than numverts value {1}",
-                            vertices.Count, numberOfVertices));
-                }
+
+                AssertCorrectListSize("vertices", vertices, numberOfVertices);
 
 
                 ParseKeyword("numtris");
@@ -181,12 +169,8 @@ namespace Parser
 
                     triangles.Add(new Triangle(index, vertex1, vertex2, vertex3));
                 }
-                if (triangles.Count != numberOfTriangles)
-                {
-                    throw new Exception(
-                        string.Format("number of triangles defined in file {0} is differnt than numtris value {1}",
-                            triangles.Count, numberOfTriangles));
-                }
+
+                AssertCorrectListSize("triangles", triangles, numberOfTriangles);
 
 
                 ParseKeyword("numweights");
@@ -208,12 +192,8 @@ namespace Parser
 
                     weights.Add(new Weight(index, jointIndex, weightValue, posX, posY, posZ));
                 }
-                if (weights.Count != numberOfWeights)
-                {
-                    throw new Exception(
-                        string.Format("number of weight in file {0} is different than numweights value {1}",
-                            weights.Count, numberOfWeights));
-                }
+
+                AssertCorrectListSize("weights", weights, numberOfWeights);
 
 
                 meshes.Add(new Mesh(shader, vertices, triangles, weights));
@@ -284,45 +264,16 @@ namespace Parser
 
 
             var skeletonJoints = ParseSkeletonJoints();
-            if (skeletonJoints.Count != numJoints)
-            {
-                throw new Exception(string.Format(
-                    "number of parsed skeleton joints ({0}) is different than expected ({1})",
-                    skeletonJoints.Count, numJoints));
-            }
+            AssertCorrectListSize("skeleton joints", skeletonJoints, numJoints);
 
             var bounds = ParseBounds();
-            if (bounds.Count != numFrames)
-            {
-                throw new Exception(string.Format(
-                    "number of parsed frame bounds ({0}) is different than expected ({1})",
-                    bounds.Count, numFrames));
-            }
+            AssertCorrectListSize("frame bounds", bounds, numFrames);
 
             var baseFrames = ParseBaseFrames();
-            if (baseFrames.Count != numJoints)
-            {
-                throw new Exception(string.Format(
-                    "number of parsed base frames ({0}) is different than expected ({1})",
-                    baseFrames.Count, numJoints));
-            }
+            AssertCorrectListSize("base frames", baseFrames, numJoints);
 
-            var frames = ParseFrames();
-            if (frames.Count != numFrames)
-            {
-                throw new Exception(string.Format(
-                    "number of parsed frames ({0}) is different than expected ({1})",
-                    frames.Count, numFrames));
-            }
-            var incorrectFrames = frames.Where(frame => frame.Parameters.Count != numAnimatedComponents).ToList();
-            if (incorrectFrames.Any())
-            {
-                throw new Exception(string.Format(
-                    "incorrect number of parameters in frames [{0}], expected {1}, got [{2}]", 
-                    incorrectFrames.Select(frame => frame.Index).Aggregate("", (s1, s2) => s1 + " " + s2),
-                    numAnimatedComponents,
-                    incorrectFrames.Select(frame => frame.Parameters.Count).Aggregate("", (s1, s2) => s1 + " " + s2)));
-            }
+            var frames = ParseFrames(numAnimatedComponents);
+            AssertCorrectListSize("frames", frames, numFrames);
 
             return new Md5AnimFile(version, commandLineParameters, frameRate, skeletonJoints, bounds, baseFrames, frames);
         }
@@ -347,6 +298,7 @@ namespace Parser
 
             return joints;
         }
+
         private IList<Bound> ParseBounds()
         {
             ParseKeyword("bounds");
@@ -374,6 +326,7 @@ namespace Parser
 
             return bounds;
         }
+
         private IList<JointPosition> ParseBaseFrames()
         {
             ParseKeyword("baseframe");
@@ -401,7 +354,8 @@ namespace Parser
 
             return bounds;
         }
-        private IList<Frame> ParseFrames()
+
+        private IList<Frame> ParseFrames(int numAnimatedComponents)
         {
             var frames = new List<Frame>();
             while (TokenQueue.Peek().Type == TokenType.Word && TokenQueue.Peek().Value == "frame")
@@ -419,6 +373,8 @@ namespace Parser
                 }
 
                 ParseRightBrace();
+
+                AssertCorrectListSize("frame parameters", parameters, numAnimatedComponents);
 
                 frames.Add(new Frame(frameIndex, parameters));
             }
