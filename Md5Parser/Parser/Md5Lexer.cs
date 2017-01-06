@@ -11,17 +11,28 @@ namespace Parser
 
     public class TokenDefinition
     {
-        public TokenDefinition(Regex regex, TokenType type, bool isIgnored)
+        public TokenDefinition(Regex regex, TokenType type, Func<char, bool> condition,
+            int? searchLength, bool isIgnored)
         {
             Regex = regex;
             Type = type;
+            Condition = condition;
+            SearchLength = searchLength;
             IsIgnored = isIgnored;
         }
 
-        public TokenDefinition(Regex regex, TokenType type)
-            : this(regex, type, false){}
+        public TokenDefinition(Regex regex, TokenType type, int searchLength) 
+            : this(regex, type, c => true, searchLength, false) {}
 
+        public TokenDefinition(Regex regex, TokenType type, Func<char, bool> condition)
+            : this(regex, type, condition, null, false) {}
+
+        public TokenDefinition(Regex regex, TokenType type)
+            : this(regex, type, c => true, null, false) { }
+
+        public int? SearchLength { get; private set; }
         public bool IsIgnored { get; private set; }
+        public Func<char, bool> Condition { get; private set; }
         public Regex Regex { get; private set; }
         public TokenType Type { get; private set; }
     }
@@ -78,14 +89,14 @@ namespace Parser
             {
                 new TokenDefinition(new Regex(@"[-+]?\d+\.\d+"),  TokenType.Float),
                 new TokenDefinition(new Regex(@"[-+]?\d+"),  TokenType.Integer),
-                new TokenDefinition(new Regex(@"""(.*?)"""), TokenType.QuotedString),
-                new TokenDefinition(new Regex(@"\w+"), TokenType.Word),
-                new TokenDefinition(new Regex(@"\("),  TokenType.LParen),
-                new TokenDefinition(new Regex(@"\)"), TokenType.RParen),
-                new TokenDefinition(new Regex(@"{"),  TokenType.LBrace),
-                new TokenDefinition(new Regex(@"}"), TokenType.RBrace),
-                new TokenDefinition(new Regex(@"//.*\n"), TokenType.Comment, true),
-                new TokenDefinition(new Regex(@"\s+"), TokenType.Whitespace, true)
+                new TokenDefinition(new Regex(@"""(.*?)"""), TokenType.QuotedString, c => c == '"'),
+                new TokenDefinition(new Regex(@"\w+"), TokenType.Word, char.IsLetterOrDigit),
+                new TokenDefinition(new Regex(@"\("), TokenType.LParen, 1),
+                new TokenDefinition(new Regex(@"\)"), TokenType.RParen, 1),
+                new TokenDefinition(new Regex(@"{"),  TokenType.LBrace, 1),
+                new TokenDefinition(new Regex(@"}"), TokenType.RBrace, 1),
+                new TokenDefinition(new Regex(@"//.*\n"), TokenType.Comment, c => c == '/', null, true),
+                new TokenDefinition(new Regex(@"\s+"), TokenType.Whitespace, char.IsWhiteSpace, null, true),
             };
         }
 
@@ -99,18 +110,29 @@ namespace Parser
             {
                 TokenDefinition matchedDefinition = null;
                 int matchLength = 0;
-
+                
                 foreach (var rule in _tokenDefinitions)
                 {
-                    var match = rule.Regex.Match(source, currentIndex);
-
-                    if (match.Success && match.Index - currentIndex == 0)
+                    if (rule.Condition(source[currentIndex]))
                     {
-                        matchedDefinition = rule;
-                        matchLength = match.Length;
-                        break;
+                        Match match;
+                        if (rule.SearchLength == null)
+                        {
+                            match = rule.Regex.Match(source, currentIndex);
+                        }
+                        else
+                        {
+                            match = rule.Regex.Match(source, currentIndex, rule.SearchLength.Value);
+                        }
+
+                        if (match.Success && match.Index - currentIndex == 0)
+                        {
+                            matchedDefinition = rule;
+                            matchLength = match.Length;
+                            break;
+                        } 
                     }
-                }
+                } 
 
                 if (matchedDefinition == null)
                 {

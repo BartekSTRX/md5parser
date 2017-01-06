@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "Parser\Parser.csproj", "{8D6F5F61-796B-4575-B5A7-444B24884335}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{A565C4AD-D5A8-446F-B599-90473630FF4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{6AA1BA1D-25DB-4273-9E3D-78AEE15A81B6}"
+EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -21,6 +26,10 @@ Global
 		{A565C4AD-D5A8-446F-B599-90473630FF4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A565C4AD-D5A8-446F-B599-90473630FF4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A565C4AD-D5A8-446F-B599-90473630FF4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AA1BA1D-25DB-4273-9E3D-78AEE15A81B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA1BA1D-25DB-4273-9E3D-78AEE15A81B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA1BA1D-25DB-4273-9E3D-78AEE15A81B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA1BA1D-25DB-4273-9E3D-78AEE15A81B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
