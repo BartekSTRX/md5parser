@@ -22,7 +22,7 @@ namespace Parser
         private string[] ParseTokens(string str)
         {
             return str.Split(' ')
-                .Where(s => !string.IsNullOrWhiteSpace(s))
+                .Where(s => !s.All(char.IsWhiteSpace))
                 .ToArray();
         }
 
@@ -135,7 +135,7 @@ namespace Parser
 
                     while (parameters.Count < numAnimatedComponents)
                     {
-                        var frameValues = ParseTokens(lines[index]).Select(ParseFloat);
+                        var frameValues = ParseTokens(lines[index]).Select((string s) => ParseFloat(s));
 
                         parameters.AddRange(frameValues);
                         index++;
