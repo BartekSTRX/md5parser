@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Parser
+namespace Parser.Old
 {
     public abstract class Md5Parser
     {

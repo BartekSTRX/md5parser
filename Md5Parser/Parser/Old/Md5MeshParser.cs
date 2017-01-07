@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Parser.Data.Mesh;
 
-namespace Parser
+namespace Parser.Old
 {
     public class Md5MeshParser : Md5Parser
     {

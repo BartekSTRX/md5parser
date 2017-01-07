@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Parser
+namespace Parser.Old
 {
     public enum TokenType
     {

@@ -46,10 +46,10 @@
     <Compile Include="Data\Mesh\Triangle.cs" />
     <Compile Include="Data\Mesh\Vertex.cs" />
     <Compile Include="Data\Mesh\Weight.cs" />
-    <Compile Include="Md5AnimParser.cs" />
-    <Compile Include="Md5MeshParser.cs" />
-    <Compile Include="Md5Lexer.cs" />
-    <Compile Include="Md5Parser.cs" />
+    <Compile Include="Old\Md5AnimParser.cs" />
+    <Compile Include="Old\Md5Lexer.cs" />
+    <Compile Include="Old\Md5MeshParser.cs" />
+    <Compile Include="Old\Md5Parser.cs" />
     <Compile Include="ParserMd5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using Parser;
+using Parser.Old;
 
 namespace Tests
 {

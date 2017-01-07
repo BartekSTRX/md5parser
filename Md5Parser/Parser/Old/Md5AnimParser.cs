@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Parser.Data.Anim;
 
-namespace Parser
+namespace Parser.Old
 {
     public class Md5AnimParser : Md5Parser
     {
