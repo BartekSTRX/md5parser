@@ -46,14 +46,14 @@ namespace Parser
             return int.Parse(token.Value);
         }
 
-        protected double ParseFloat(string name)
+        protected float ParseFloat(string name)
         {
             var token = TokenQueue.Dequeue();
             if (token.Type != TokenType.Float && token.Type != TokenType.Integer)
             {
                 throw new Exception(name + " expected (floating point number)");
             }
-            return double.Parse(token.Value, CultureInfo.InvariantCulture);
+            return float.Parse(token.Value, CultureInfo.InvariantCulture);
         }
 
         protected string ParseQuotedString(string name)

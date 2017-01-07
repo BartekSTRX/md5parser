@@ -50,6 +50,7 @@
     <Compile Include="Md5MeshParser.cs" />
     <Compile Include="Md5Lexer.cs" />
     <Compile Include="Md5Parser.cs" />
+    <Compile Include="ParserMd5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

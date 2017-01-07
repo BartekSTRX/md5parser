@@ -4,13 +4,13 @@ namespace Parser.Data.Anim
 {
     public class Frame
     {
-        public Frame(int index, IList<double> parameters)
+        public Frame(int index, IList<float> parameters)
         {
             Parameters = parameters;
             Index = index;
         }
 
         public int Index { get; private set; }
-        public IList<double> Parameters { get; private set; }
+        public IList<float> Parameters { get; private set; }
     }
 }

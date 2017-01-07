@@ -2,7 +2,7 @@ namespace Parser.Data.Mesh
 {
     public class Weight
     {
-        public Weight(int index, int jointIndex, double value, double posX, double posY, double posZ)
+        public Weight(int index, int jointIndex, float value, float posX, float posY, float posZ)
         {
             Index = index;
             JointIndex = jointIndex;
@@ -14,9 +14,9 @@ namespace Parser.Data.Mesh
 
         public int Index { get; private set; }
         public int JointIndex { get; private set; }
-        public double Value { get; private set; }
-        public double PosX { get; private set; }
-        public double PosY { get; private set; }
-        public double PosZ { get; private set; }
+        public float Value { get; private set; }
+        public float PosX { get; private set; }
+        public float PosY { get; private set; }
+        public float PosZ { get; private set; }
     }
 }

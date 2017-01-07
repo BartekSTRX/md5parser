@@ -2,7 +2,7 @@ namespace Parser.Data.Anim
 {
     public class Bound
     {
-        public Bound(double minX, double minY, double minZ, double maxX, double maxY, double maxZ)
+        public Bound(float minX, float minY, float minZ, float maxX, float maxY, float maxZ)
         {
             MinX = minX;
             MinY = minY;
@@ -12,11 +12,11 @@ namespace Parser.Data.Anim
             MaxZ = maxZ;
         }
 
-        public double MinX { get; private set; }
-        public double MinY { get; private set; }
-        public double MinZ { get; private set; }
-        public double MaxX { get; private set; }
-        public double MaxY { get; private set; }
-        public double MaxZ { get; private set; }
+        public float MinX { get; private set; }
+        public float MinY { get; private set; }
+        public float MinZ { get; private set; }
+        public float MaxX { get; private set; }
+        public float MaxY { get; private set; }
+        public float MaxZ { get; private set; }
     }
 }

@@ -108,7 +108,7 @@ namespace Parser
 
                 ParseLeftBrace();
 
-                var parameters = new List<double>();
+                var parameters = new List<float>();
                 while (TokenQueue.Peek().Type == TokenType.Float || TokenQueue.Peek().Type == TokenType.Integer)
                 {
                     parameters.Add(ParseFloat("frame parameter"));

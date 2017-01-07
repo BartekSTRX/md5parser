@@ -2,7 +2,7 @@ namespace Parser.Data.Anim
 {
     public class JointPosition
     {
-        public JointPosition(double posX, double posY, double posZ, double orientX, double orientY, double orientZ)
+        public JointPosition(float posX, float posY, float posZ, float orientX, float orientY, float orientZ)
         {
             PosX = posX;
             PosY = posY;
@@ -12,11 +12,11 @@ namespace Parser.Data.Anim
             OrientZ = orientZ;
         }
 
-        public double PosX { get; private set; }
-        public double PosY { get; private set; }
-        public double PosZ { get; private set; }
-        public double OrientX { get; private set; }
-        public double OrientY { get; private set; }
-        public double OrientZ { get; private set; }
+        public float PosX { get; private set; }
+        public float PosY { get; private set; }
+        public float PosZ { get; private set; }
+        public float OrientX { get; private set; }
+        public float OrientY { get; private set; }
+        public float OrientZ { get; private set; }
     }
 }

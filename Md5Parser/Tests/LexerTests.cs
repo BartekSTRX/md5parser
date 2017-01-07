@@ -129,5 +129,23 @@ mesh {
 
             Console.WriteLine(result);
         }
+
+        [Test]
+        public void TestSimpleMeshParser()
+        {
+            var parser = new ParserMd5();
+            var mesh = parser.ParseMesh(_pathMesh);
+
+            Console.WriteLine(mesh);
+        }
+
+        [Test]
+        public void TestSimpleAnimParser()
+        {
+            var parser = new ParserMd5();
+            var anim = parser.ParseAnim(_pathAnim);
+
+            Console.WriteLine(anim);
+        }
     }
 }

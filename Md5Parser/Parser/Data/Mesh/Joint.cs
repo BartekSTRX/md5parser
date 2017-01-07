@@ -3,8 +3,8 @@ namespace Parser.Data.Mesh
     public class Joint
     {
         public Joint(string boneName, int parentIndex, 
-            double posX, double poxY, double posZ, 
-            double orientX, double orientY, double orientZ)
+            float posX, float poxY, float posZ, 
+            float orientX, float orientY, float orientZ)
         {
             BoneName = boneName;
             ParentIndex = parentIndex;
@@ -18,11 +18,11 @@ namespace Parser.Data.Mesh
 
         public string BoneName { get; private set; }
         public int ParentIndex { get; private set; }
-        public double PosX { get; private set; }
-        public double PoxY { get; private set; }
-        public double PosZ { get; private set; }
-        public double OrientX { get; private set; }
-        public double OrientY { get; private set; }
-        public double OrientZ { get; private set; }
+        public float PosX { get; private set; }
+        public float PoxY { get; private set; }
+        public float PosZ { get; private set; }
+        public float OrientX { get; private set; }
+        public float OrientY { get; private set; }
+        public float OrientZ { get; private set; }
     }
 }
